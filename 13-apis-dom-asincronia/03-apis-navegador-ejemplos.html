@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APIs del Navegador en JavaScript</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+    section { margin-bottom: 40px; }
+    h2 { color: #2c3e50; }
+    pre { background: #f4f4f4; padding: 10px; overflow-x: auto; border-left: 4px solid #333; }
+    button, video { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Demostración de APIs del Navegador en JavaScript</h1>
+
+  <section>
+    <h2>1. API del DOM</h2>
+    <p id="mensaje">Hola, mundo.</p>
+    <button onclick="document.getElementById('mensaje').textContent = 'Texto actualizado por DOM'">
+      Cambiar texto
+    </button>
+  </section>
+
+  <section>
+    <h2>2. API de Eventos</h2>
+    <button id="boton">Haz clic aquí</button>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("boton").addEventListener("click", () => {
+          alert("¡Has hecho clic!");
+        });
+      });
+    </script>
+  </section>
+
+  <section>
+    <h2>3. API de Almacenamiento Local</h2>
+    <button onclick="localStorage.setItem('usuario', 'Alejandro'); alert('Usuario guardado en localStorage')">
+      Guardar usuario
+    </button>
+    <button onclick="alert('Bienvenido: ' + localStorage.getItem('usuario'))">
+      Leer usuario
+    </button>
+  </section>
+
+  <section>
+    <h2>4. API de Geolocalización</h2>
+    <button onclick="obtenerUbicacion()">Obtener ubicación</button>
+    <script>
+      function obtenerUbicacion() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(pos => {
+            alert(`Latitud: ${pos.coords.latitude}, Longitud: ${pos.coords.longitude}`);
+          });
+        } else {
+          alert("Geolocalización no soportada");
+        }
+      }
+    </script>
+  </section>
+
+  <section>
+    <h2>5. API de Cámara</h2>
+    <video autoplay playsinline id="video" width="320" height="240"></video>
+    <script>
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(stream => {
+          document.getElementById("video").srcObject = stream;
+        })
+        .catch(error => console.error("Error al acceder a la cámara:", error));
+    </script>
+  </section>
+
+</body>
+</html>

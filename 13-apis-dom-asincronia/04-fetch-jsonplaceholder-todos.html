@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consumir JSONPlaceholder con Fetch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: #ffffff;
+      margin: 5px 0;
+      padding: 10px;
+      border-left: 5px solid #3498db;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+      border-left-color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lista de Tareas (Todos) desde JSONPlaceholder</h1>
+  <p>Consumiendo datos con <code>fetch</code> y modificando el DOM:</p>
+  <ul id="lista-todos"><li>Cargando tareas...</li></ul>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(response => response.json())
+        .then(todos => {
+          const lista = document.getElementById("lista-todos");
+          lista.innerHTML = ""; // Limpiar texto inicial
+
+          todos.forEach(todo => {
+            const li = document.createElement("li");
+            li.textContent = todo.title;
+            if (todo.completed) {
+              li.classList.add("completed");
+            }
+            lista.appendChild(li);
+          });
+        })
+        .catch(error => {
+          document.getElementById("lista-todos").textContent = "Error al cargar tareas.";
+          console.error("Error en fetch:", error);
+        });
+    });
+  </script>
+
+</body>
+</html>
